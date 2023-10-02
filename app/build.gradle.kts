@@ -23,12 +23,15 @@ dependencies {
 
     // This dependency is used by the application.
     implementation("com.google.guava:guava:32.1.1-jre")
+    implementation("io.javalin:javalin:5.6.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
+    implementation("io.reactivex.rxjava3:rxjava:3.1.8")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(20))
     }
 }
 

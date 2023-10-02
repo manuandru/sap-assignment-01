@@ -3,12 +3,42 @@
  */
 package it.assignment01;
 
+import io.javalin.Javalin;
+import io.javalin.http.sse.SseClient;
+import io.javalin.http.staticfiles.Location;
+
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        var app = Javalin.create(config -> {
+            config.staticFiles.add("/public", Location.CLASSPATH);
+        });
+
+        Queue<SseClient> clients = new ConcurrentLinkedQueue<SseClient>();
+
+        app.sse("/sse", client -> {
+            client.keepAlive();
+            client.onClose(() -> clients.remove(client));
+            clients.add(client);
+        });
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    clients.forEach(c -> c.sendComment("test"));
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }).start();
+
+        app.start(8000);
     }
 }

@@ -2,50 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Simple GUI</title>
+    <title>Simple Sse GUI</title>
+    <style>
+        body {
+            margin-top: 1em;
+            display: flex;
+            flex-direction: column;
+            font-size: 5em;
+        }
 
+        body > h1, span {
+            display: inline-block;
+            margin: auto;
+            font-size: 2em;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+    </style>
+    <script defer type="application/javascript">
+        window.onload = _ => {
+            const sse = new EventSource("/sse");
+            const output = document.getElementById("output");
+
+            /*
+             * Listen for events:
+             *
+             * event: model
+             * data: new model value
+             */
+            sse.addEventListener("model", (e) => {
+                console.log(e.data);
+                output.innerText = e.data;
+            });
+        }
+    </script>
 </head>
 <body>
-    <h1>Ciao</h1>
-    <script type="application/javascript" defer>
-        const sse = new EventSource("/sse");
 
-        /*
-         * This will listen only for events
-         * similar to the following:
-         *
-         * event: notice
-         * data: useful data
-         * id: someid
-         */
-        sse.addEventListener("notice", (e) => {
-            console.log(e.data);
-        });
+<h1>Model value</h1>
+<span id="output"></span>
 
-        sse.addEventListener("test", (e) => {
-            console.log(e.data);
-            console.log(e);
-            console.log("test");
-        });
-
-        /*
-         * Similarly, this will listen for events
-         * with the field `event: update`
-         */
-        sse.addEventListener("update", (e) => {
-            console.log(e.data);
-        });
-
-        /*
-         * The event "message" is a special case, as it
-         * will capture events without an event field
-         * as well as events that have the specific type
-         * `event: message` It will not trigger on any
-         * other event type.
-         */
-        sse.addEventListener("message", (e) => {
-            console.log(e.data);
-        });
-    </script>
 </body>
 </html>

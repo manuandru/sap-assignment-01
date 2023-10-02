@@ -9,7 +9,7 @@ public class MyController implements UserInputObserver {
         this.model = model;
     }
 
-    public void notifyNewUpdateRequested() {
+    public synchronized void notifyNewUpdateRequested() {
         log("New update requested by the user");
         model.update();
     }

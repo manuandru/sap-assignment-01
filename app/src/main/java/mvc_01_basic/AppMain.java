@@ -1,5 +1,6 @@
 package mvc_01_basic;
 
+import it.assignment01.RestController;
 import it.assignment01.SseView;
 
 public class AppMain {
@@ -18,6 +19,7 @@ public class AppMain {
         inputUI.display();
 
         SseView sseView = new SseView(model);
+        RestController restController = new RestController(model);
     }
 
 }

@@ -2,6 +2,7 @@ package mvc_01_basic;
 
 import it.assignment01.RestController;
 import it.assignment01.SseView;
+import it.assignment01.WebsocketViewController;
 
 public class AppMain {
     static public void main(String[] args) {
@@ -20,6 +21,7 @@ public class AppMain {
 
         SseView sseView = new SseView(model);
         RestController restController = new RestController(model);
+        WebsocketViewController wsVC = new WebsocketViewController(model);
     }
 
 }

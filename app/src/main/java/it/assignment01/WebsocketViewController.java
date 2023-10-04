@@ -3,15 +3,21 @@ package it.assignment01;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.websocket.WsContext;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.Subject;
+import mvc_01_basic.InputSource;
 import mvc_01_basic.ModelInterface;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class WebsocketViewController {
+public class WebsocketViewController implements InputSource {
 
     public static final String UPDATE_COMMAND = "update";
+    private final Subject<Event> emitter = PublishSubject.create();
+
     private final Disposable unsubscriber; // call me to unsubscribe!
     private final Queue<WsContext> clients = new ConcurrentLinkedQueue<>();
 
@@ -28,7 +34,7 @@ public class WebsocketViewController {
             ws.onMessage(ctx -> {
                 if (UPDATE_COMMAND.equals(ctx.message())) {
                     log("message from ws => updating the model");
-                    model.update();
+                    emitter.onNext(Event.WS_EVENT);
                 }
             });
             ws.onClose(clients::remove);
@@ -40,6 +46,11 @@ public class WebsocketViewController {
             broadcastToClients(v);
         });
         app.start(10000);
+    }
+
+    @Override
+    public Observable<Event> onInput() {
+        return emitter;
     }
 
     private void publishToClient(WsContext client, int value) {

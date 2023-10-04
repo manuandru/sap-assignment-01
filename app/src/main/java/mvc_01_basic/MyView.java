@@ -16,7 +16,7 @@ public class MyView {
         frame = new MyFrame(model.getState());
         this.unsubscriber = model.onVariation().subscribe(v -> {
             log("model updated => updating the view");
-            frame.updateView(model.getState());
+            frame.updateView(v);
         });
     }
 

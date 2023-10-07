@@ -1,15 +1,16 @@
-package it.assignment01;
+package it.assignment01.components;
 
 import io.javalin.Javalin;
 import io.javalin.http.sse.SseClient;
 import io.javalin.http.staticfiles.Location;
 import io.reactivex.rxjava3.disposables.Disposable;
 import mvc_01_basic.ModelInterface;
+import mvc_01_basic.View;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class SseView {
+public class SseView implements View {
     private final Disposable unsubscriber; // call me to unsubscribe!
     private final Queue<SseClient> clients = new ConcurrentLinkedQueue<>();
 

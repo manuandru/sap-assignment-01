@@ -1,8 +1,9 @@
-package mvc_01_basic;
+package mvc_01_basic.components;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import io.reactivex.rxjava3.subjects.Subject;
+import mvc_01_basic.InputSource;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +12,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class MyInputUI implements InputSource {
+public class InputUISource implements InputSource {
 
     private final Subject<Event> emitter = PublishSubject.create();
     private final MyFrame frame;
 
-    public MyInputUI() {
+    public InputUISource() {
         frame = new MyFrame();
     }
 
@@ -24,7 +25,6 @@ public class MyInputUI implements InputSource {
     public Observable<Event> onInput() {
         return emitter;
     }
-
 
     public void display() {
         SwingUtilities.invokeLater(() -> {

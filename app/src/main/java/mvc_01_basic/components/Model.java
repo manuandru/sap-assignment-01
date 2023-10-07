@@ -1,10 +1,11 @@
-package mvc_01_basic;
+package mvc_01_basic.components;
 
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import io.reactivex.rxjava3.subjects.Subject;
+import mvc_01_basic.ModelInterface;
 
-public class MyModel implements ModelInterface {
+public class Model implements ModelInterface {
 
     private final Subject<Integer> onVariation = PublishSubject.create();
     private int state = 0;

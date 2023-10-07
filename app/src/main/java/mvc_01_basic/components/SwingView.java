@@ -1,18 +1,20 @@
-package mvc_01_basic;
+package mvc_01_basic.components;
 
 import io.reactivex.rxjava3.disposables.Disposable;
+import mvc_01_basic.ModelInterface;
+import mvc_01_basic.View;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class MyView {
+public class SwingView implements View {
 
     private final MyFrame frame;
     private final Disposable unsubscriber; // call me to unsubscribe!
 
-    public MyView(ModelInterface model) {
+    public SwingView(ModelInterface model) {
         frame = new MyFrame(model.getState());
         this.unsubscriber = model.onVariation().subscribe(v -> {
             log("model updated => updating the view");

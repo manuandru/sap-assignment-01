@@ -1,11 +1,13 @@
-package mvc_01_basic;
+package mvc_01_basic.components;
 
 
-public class MyController implements UserInputObserver {
+import mvc_01_basic.ModelInterface;
+
+public class Controller {
 
     private final ModelInterface model;
 
-    public MyController(ModelInterface model) {
+    public Controller(ModelInterface model) {
         this.model = model;
     }
 

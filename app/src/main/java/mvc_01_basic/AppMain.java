@@ -1,32 +1,38 @@
 package mvc_01_basic;
 
-import it.assignment01.REstInputSource;
-import it.assignment01.SseView;
-import it.assignment01.WebsocketViewController;
+import it.assignment01.components.REstSource;
+import it.assignment01.components.SseView;
+import it.assignment01.components.WebsocketViewSource;
+import mvc_01_basic.components.*;
 
 public class AppMain {
     static public void main(String[] args) {
 
-        MyModel model = new MyModel();
-        MyView view = new MyView(model);
-        MyInputUI inputUI = new MyInputUI();
-        MyController controller = new MyController(model);
+        Model model = new Model();
+        SwingView view = new SwingView(model);
+        InputUISource inputUI = new InputUISource();
+        Controller controller = new Controller(model);
         var inputUIUnsubscriber = inputUI.onInput().subscribe(i -> {
             controller.notifyNewUpdateRequested();
         });
-        MyAutonomousController autController = new MyAutonomousController(model);
-        autController.start();
+
+        AutonomousAgentSource autAgent = new AutonomousAgentSource();
+        var autAgentUnsubscriber = autAgent.onInput().subscribe(i -> {
+            controller.notifyNewUpdateRequested();
+        });
+        autAgent.start();
+
         view.display();
         inputUI.display();
 
         SseView sseView = new SseView(model);
 
-        REstInputSource restInput = new REstInputSource();
+        REstSource restInput = new REstSource();
         var restInputUnsubscriber = restInput.onInput().subscribe(i -> {
             controller.notifyNewUpdateRequested();
         });
 
-        WebsocketViewController wsVC = new WebsocketViewController(model);
+        WebsocketViewSource wsVC = new WebsocketViewSource(model);
         var wsInputUnsubscriber = wsVC.onInput().subscribe(i -> {
             controller.notifyNewUpdateRequested();
         });

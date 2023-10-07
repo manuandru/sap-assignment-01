@@ -1,4 +1,4 @@
-package it.assignment01;
+package it.assignment01.components;
 
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
@@ -9,11 +9,12 @@ import io.reactivex.rxjava3.subjects.PublishSubject;
 import io.reactivex.rxjava3.subjects.Subject;
 import mvc_01_basic.InputSource;
 import mvc_01_basic.ModelInterface;
+import mvc_01_basic.View;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class WebsocketViewController implements InputSource {
+public class WebsocketViewSource implements InputSource, View {
 
     public static final String UPDATE_COMMAND = "update";
     private final Subject<Event> emitter = PublishSubject.create();
@@ -21,7 +22,7 @@ public class WebsocketViewController implements InputSource {
     private final Disposable unsubscriber; // call me to unsubscribe!
     private final Queue<WsContext> clients = new ConcurrentLinkedQueue<>();
 
-    public WebsocketViewController(ModelInterface model) {
+    public WebsocketViewSource(ModelInterface model) {
         var app = Javalin.create(config -> {
             config.staticFiles.add("/public/websocket", Location.CLASSPATH);
         });

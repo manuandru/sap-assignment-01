@@ -7,6 +7,6 @@ public interface InputSource {
     Observable<Event> onInput();
 
     enum Event {
-        CLICK, REST_EVENT, WS_EVENT
+        CLICK, REST_EVENT, WS_EVENT, AUTONOMOUS
     }
 }

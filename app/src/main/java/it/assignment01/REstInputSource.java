@@ -1,6 +1,7 @@
 package it.assignment01;
 
 import io.javalin.Javalin;
+import io.javalin.http.Context;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import io.reactivex.rxjava3.subjects.Subject;
@@ -12,10 +13,14 @@ public class REstInputSource implements InputSource {
 
     public REstInputSource() {
         var app = Javalin.create()
-                .get("/increment", ctx -> { // just using get in order to call it from browser searchbar
-                    log("user request update => updating the model");
-                    emitter.onNext(Event.REST_EVENT);
-                }).start(9000);
+                .get("/increment", this::requestHandler) // only for testing purpose: you can call it from browser!
+                .put("/increment", this::requestHandler)
+                .start(9000);
+    }
+
+    private void requestHandler(Context ctx) {
+        log("user request update => updating the model");
+        emitter.onNext(Event.REST_EVENT);
     }
 
     private void log(String msg) {

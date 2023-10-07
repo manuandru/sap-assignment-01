@@ -2,7 +2,7 @@ package mvc_01_basic;
 
 import it.assignment01.components.REstSource;
 import it.assignment01.components.SseView;
-import it.assignment01.components.WebsocketViewSource;
+import it.assignment01.components.WSViewSource;
 import mvc_01_basic.components.*;
 
 public class AppMain {
@@ -32,7 +32,7 @@ public class AppMain {
             controller.notifyNewUpdateRequested();
         });
 
-        WebsocketViewSource wsVC = new WebsocketViewSource(model);
+        WSViewSource wsVC = new WSViewSource(model);
         var wsInputUnsubscriber = wsVC.onInput().subscribe(i -> {
             controller.notifyNewUpdateRequested();
         });

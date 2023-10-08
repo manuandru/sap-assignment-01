@@ -37,7 +37,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass.set("it.assignment01.App")
+    mainClass.set("mvc_01_basic.AppMain")
 }
 
 tasks.named<Test>("test") {

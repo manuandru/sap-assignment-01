@@ -1,9 +1,3 @@
----
-title: "SAP Assignment 01"
-author: Manuel Andruccioli
-date: 2023-10-08
-geometry: margin=2cm
----
 # SAP Assignment 01
 
 ## Architettura
